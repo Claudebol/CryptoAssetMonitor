@@ -6,8 +6,8 @@ class Popup{
     this.socket = undefined;
     this.flash = false;
     this.isValid = false;
-    //this.url = 'http://assetmonitor.us-east-2.elasticbeanstalk.com';
-    this.url = 'http://localhost:8080/AssetManager';
+    this.url = 'http://assetmonitor.us-east-2.elasticbeanstalk.com';
+    //this.url = 'http://localhost:8080/AssetManager';
     this.loadPage();
   }
 }
