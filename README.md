@@ -1,4 +1,4 @@
-# AssetMonitor
+# CryptoAssetMonitor
 Personal project. 
 A Google Chrome extension that allows you to enter your balance for a specific cryptocurrency and keeps track of the price using CryptoCompare.com's data. 
 I have a server built that continuously pulls all the prices from CryptoCompare.com.
