@@ -1,0 +1,35 @@
+.dark-mode {
+  background: #333;
+  color: #ddd;
+}
+
+.light-mode {
+  background: #ddd;
+  color: #333;
+}
+
+.header-container {
+  width: 100%;
+  text-align: center;
+}
+
+.login-container {
+  width: 275px;
+  text-align: center;
+}
+
+.form-field {
+  display: inline-block;
+  width: 90%;
+  margin-bottom:0.6em;
+}
+.form-field input{
+  float: right;
+}
+.form-field label {
+  float: left;
+  font-size: 14px;
+}
+.login-container form input[type=submit]{
+  width: 35%;
+}
