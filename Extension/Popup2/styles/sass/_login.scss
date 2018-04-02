@@ -1,0 +1,23 @@
+.login-container {
+  width: 275px;
+  text-align: center;
+
+  .form-field {
+    display: inline-block;
+    width: 90%;
+    margin-bottom:0.6em;
+    input{
+      float: right;
+    }
+    label {
+      float: left;
+      font-size: 14px;
+    }
+  }
+  form input[type=submit] {
+    width: 35%;
+  }
+  .form-buttons {
+    display: inline;
+  }
+}
