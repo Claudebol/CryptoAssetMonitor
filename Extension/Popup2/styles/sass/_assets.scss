@@ -1,0 +1,9 @@
+.assets-container {
+  width: 350px;
+  .assets {
+    .asset-icon{ width: 10%; }
+    .asset-balance{ width: 40%; }
+    .asset-value{ width: 30%; }
+    .asset-change{ width: 20%;}
+  }
+}

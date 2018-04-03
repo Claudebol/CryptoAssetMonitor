@@ -21,26 +21,31 @@
       top: 4px;
       cursor: pointer;
     }
+    a {
+      float: right;
+      margin-top: -0.4rem;
+      color: #f00;
+    }
   }
   .form-buttons {
     padding-top: 0.5rem;
     * {
       width: 5.5rem;
-      height: 2rem;
+      height: 1.75rem;
       max-height: 2rem;
       margin: 0.1em;
       border-radius: 5px;
       outline: none;
       border: none;
-      font-weight: bolder;
+      font-weight: 700;
+      font-size: 14px;
       -webkit-transition-duration: 0.3s; /* Safari */
       transition-duration: 0.3s;
       cursor: pointer;
       background: #eee;
       &:hover {
-        background: #25f;
+        background: #9196F3;
         color: #eee;
-        font-weight: 800;
       }
     }
   }
