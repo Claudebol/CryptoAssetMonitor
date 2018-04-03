@@ -1,23 +1,47 @@
 .login-container {
   width: 275px;
   text-align: center;
-
   .form-field {
+    position: relative;
     display: inline-block;
     width: 90%;
     margin-bottom:0.6em;
     input{
       float: right;
+      border: 0.2rem solid transparent;
+      border-radius: 4px;
     }
     label {
       float: left;
-      font-size: 14px;
+      font-size: 15px;
+      padding-top: 0.1rem;
+    }
+    .eye {
+      left: 226px;
+      top: 4px;
+      cursor: pointer;
     }
   }
-  form input[type=submit] {
-    width: 35%;
-  }
   .form-buttons {
-    display: inline;
+    padding-top: 0.5rem;
+    * {
+      width: 5.5rem;
+      height: 2rem;
+      max-height: 2rem;
+      margin: 0.1em;
+      border-radius: 5px;
+      outline: none;
+      border: none;
+      font-weight: bolder;
+      -webkit-transition-duration: 0.3s; /* Safari */
+      transition-duration: 0.3s;
+      cursor: pointer;
+      background: #eee;
+      &:hover {
+        background: #25f;
+        color: #eee;
+        font-weight: 800;
+      }
+    }
   }
 }
