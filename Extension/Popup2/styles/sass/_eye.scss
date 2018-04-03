@@ -1,0 +1,27 @@
+.eye {
+  width: 13px;
+  height: 13px;
+  border: solid 1px #000;
+  border-radius:  75% 15%;
+  position: absolute;
+  transform: rotate(45deg);
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border: solid 1px #000;
+    border-radius: 50%;
+    left: 3px;
+    top: 3px;
+  }
+  div {
+    position: absolute;
+    border: 1px solid #000;
+    width: 0;
+    height: 10px;
+    right: 5px;
+  }
+
+}
