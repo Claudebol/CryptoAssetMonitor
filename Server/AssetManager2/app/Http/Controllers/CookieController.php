@@ -5,9 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Cookie;
 use Validator;
+use Auth;
 
 class CookieController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+      return response(Cookie::where('subscriber_id',Auth::id())->get());
+    }
 
     /**
      * Store a newly created resource in storage.

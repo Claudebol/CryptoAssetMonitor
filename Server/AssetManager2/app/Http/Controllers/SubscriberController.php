@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Subscriber;
+use Illuminate\Support\Facades\Hash;
 use Validator;
+use Auth;
 
 class SubscriberController extends Controller
 {
@@ -27,15 +29,15 @@ class SubscriberController extends Controller
     public function store(Request $request)
     {
       $validator = Validator::make($request->all(), [
-        'email' => 'required|email',
-        'password' => 'required',
+        'email' => 'required|string|email|max:255',
+        'password' => 'required|string',
       ]);
       if($validator->fails())
         return response($validator->failed());
 
       $subscriber = Subscriber::create([
         'email' => $request->input('email'),
-        'password' => $request->input('password'),
+        'password' => Hash::make($request->input('password')),
       ]);
 
       return response($subscriber->id);
@@ -66,7 +68,7 @@ class SubscriberController extends Controller
         if($request->has('email'))
           $subscriber->email = $request->input('email');
         if($request->has('password'))
-          $subscriber->password = $request->input('password');
+          $subscriber->password = Hash::make($request->input('password'));
 
         return response($subscriber->save());
     }
