@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Subscriber;
+use Validator;
 
 class SubscriberController extends Controller
 {
@@ -13,17 +15,7 @@ class SubscriberController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response(Subscriber::all());
     }
 
     /**
@@ -34,7 +26,19 @@ class SubscriberController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $validator = Validator::make($request->all(), [
+        'email' => 'required|email',
+        'password' => 'required',
+      ]);
+      if($validator->fails())
+        return response($validator->failed());
+
+      $subscriber = Subscriber::create([
+        'email' => $request->input('email'),
+        'password' => $request->input('password'),
+      ]);
+
+      return response($subscriber->id);
     }
 
     /**
@@ -45,18 +49,7 @@ class SubscriberController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+      return response(Subscriber::find($id));
     }
 
     /**
@@ -68,7 +61,14 @@ class SubscriberController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $subscriber = Subscriber::find($id);
+
+        if($request->has('email'))
+          $subscriber->email = $request->input('email');
+        if($request->has('password'))
+          $subscriber->password = $request->input('password');
+
+        return response($subscriber->save());
     }
 
     /**
@@ -79,6 +79,7 @@ class SubscriberController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $destroy = Subscriber::destroy($id);
+      return response($destroy === 1); //True if successfully deleted.
     }
 }
