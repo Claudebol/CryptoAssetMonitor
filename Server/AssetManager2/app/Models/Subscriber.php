@@ -1,14 +1,56 @@
 <?php
 
-namespace Models\App;
+namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Subscriber extends Model
+class Subscriber extends Authenticatable
 {
-  protected $table = "subscribers";
+  use Notifiable;
 
-  protected $fillable = ['email'];
+  /**
+   * The attributes that are NOT mass assignable.
+   *
+   * @var array
+   */
+  protected $guarded = [
+    'id',
+    'password'
+  ];
 
-  protected $guarded = ['id', 'password'];
+  /**
+   * The attributes that are mass assignable.
+   *
+   * @var array
+   */
+  protected $fillable = [
+    'email'
+  ];
+  /**
+   * The attributes that should be hidden for arrays.
+   *
+   * @var array
+   */
+  protected $hidden = [
+    'password',
+    'remember_token',
+  ];
+
+  public function cookies()
+  {
+    return $this->hasMany('App\Models\Cookie');
+  }
+
+  public function settings()
+  {
+    return $this->hasOne('App\Models\Settings');
+  }
+
+  public function subscriptions()
+  {
+    return $this->hasMany('App\Models\Subscription');
+  }
+
+
 }
