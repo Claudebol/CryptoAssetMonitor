@@ -9,6 +9,8 @@ class Subscriber extends Authenticatable
 {
   use Notifiable;
 
+  protected $primaryKey = "id";
+
   /**
    * The attributes that are NOT mass assignable.
    *
