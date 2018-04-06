@@ -16,7 +16,6 @@ class Subscriber extends Authenticatable
    */
   protected $guarded = [
     'id',
-    'password'
   ];
 
   /**
@@ -25,7 +24,8 @@ class Subscriber extends Authenticatable
    * @var array
    */
   protected $fillable = [
-    'email'
+    'email',
+    'password'
   ];
   /**
    * The attributes that should be hidden for arrays.
