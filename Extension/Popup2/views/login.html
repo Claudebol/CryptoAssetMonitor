@@ -1,5 +1,5 @@
 <div class="login-container">
-  <form onsubmit="return false;">
+  <form onsubmit="return false;" method="post" enctype="application/x-www-form-urlencoded">
     <div class="form-field">
       <label for="email">Email:</label>
       <input type="email" name="email" id="email" placeholder="Enter your email" required>
@@ -13,8 +13,8 @@
       <a href="#">Forgot your password?</a>
     </div>
     <div class="form-buttons">
-      <input type="submit" value="Login">
-      <input type="submit" value="Sign up">
+      <input type="button" id="login-button" value="Login">
+      <input type="button" id="signup-button" value="Sign up">
     </div>
   </form>
   <div class="error-container"></div>
