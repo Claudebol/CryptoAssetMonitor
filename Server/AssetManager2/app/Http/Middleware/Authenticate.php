@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Middleware;
-
+use Illuminate\Http\Request;
 use Closure;
 use Auth;
 class Authenticate
@@ -13,11 +13,12 @@ class Authenticate
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
-      if($request->is('login') || $request->is('form') || Auth::check())
+
+      if (Auth::check() || Auth::viaRemember()){
         return $next($request);
-      else
-        abort(403, 'Unauthorized action.');
+    }else
+        return response('Forbidden', 403);
     }
 }
