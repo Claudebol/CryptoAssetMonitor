@@ -78,6 +78,20 @@ return [
             'prefix' => '',
         ],
 
+        'popup' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST_POPUP', '127.0.0.1'),
+            'port' => env('DB_PORT_POPUP', '3306'),
+            'database' => env('DB_DATABASE_POPUP', 'forge'),
+            'username' => env('DB_USERNAME_POPUP', 'forge'),
+            'password' => env('DB_PASSWORD_POPUP', ''),
+            'unix_socket' => env('DB_SOCKET_POPUP', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
     ],
 
     /*
