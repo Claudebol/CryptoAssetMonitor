@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Currency extends Model
 {
   /**
+   * The connection name for the model.
+   *
+   * @var string
+   */
+  protected $connection = 'popup';
+  /**
    * The attributes that are NOT mass assignable.
    *
    * @var array
@@ -25,6 +31,15 @@ class Currency extends Model
     'name',
     'internal_id',
     'display_name',
+  ];
+  /**
+   * The attributes that should be hidden for arrays.
+   *
+   * @var array
+   */
+  protected $hidden = [
+      'created_at',
+      'updated_at',
   ];
 
   public function subscriptions()

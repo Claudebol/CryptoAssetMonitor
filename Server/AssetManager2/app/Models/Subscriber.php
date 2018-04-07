@@ -9,6 +9,13 @@ class Subscriber extends Authenticatable
 {
   use Notifiable;
 
+  /**
+   * The connection name for the model.
+   *
+   * @var string
+   */
+  protected $connection = 'popup';
+
   protected $primaryKey = "id";
 
   /**
@@ -37,12 +44,9 @@ class Subscriber extends Authenticatable
   protected $hidden = [
     'password',
     'remember_token',
+    'created_at',
+    'updated_at',
   ];
-
-  public function cookies()
-  {
-    return $this->hasMany('App\Models\Cookie');
-  }
 
   public function settings()
   {
