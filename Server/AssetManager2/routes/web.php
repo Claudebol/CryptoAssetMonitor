@@ -10,34 +10,25 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-use Illuminate\Http\Request;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Landing page
+Route::get('/', 'ViewController@home');
 
-Route::get('/form', function(){
-  return view('test');
-});
-
-Route::resources([
-  'cookie' => 'CookieController',
-  'currency' => 'CurrencyController',
-  'settings' => 'SettingsController',
-  'subscriber' => 'SubscriberController',
-  'subscription' => 'SubscriptionController',
-]);
-
-Route::post('/login', function(Request $request){
-
-  //echo \App\Models\Subscriber::find(37)->
-  if (Auth::attempt(array('email' => $request->input('email'), 'password' => $request->input('password')), true)){
-    Session::save();
-    return response(Auth::User());
-  }else{
-    return response(App\Models\Subscriber::where('email', $request->input('email'))->get() );
-  }
-  return response('error');
-
-
+//Routes for the Crypto Asset Monitor popup
+Route::group(['prefix'=>'popup'], function(){
+  //Routes that do not go through additional middleware
+  Route::get('/', 'ViewController@popup'); //Home page
+  Route::get('/form', 'ViewController@form'); //Test
+  Route::post('/login', 'AccessController@login'); //Login
+  Route::post('/subscriber', 'SubscriberController@store'); //Sign up
+  //Routes that MUST go through popup auth middleware
+  Route::group(['middleware'=>'auth.popup'], function(){
+    Route::resource('currency', 'CurrencyController');
+    Route::resource('settings', 'SettingsController');
+    Route::resource('subscriber', 'SubscriberController', ['except' => 'store']);
+    Route::resource('subscription', 'SubscriptionController');
+    Route::get('match/{word}','CurrencyController@match');
+    Route::post('/logout', 'AccessController@logout');
+    Route::get('/logout', 'AccessController@logout');
+  });
 });
