@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Subscription;
 use Validator;
+use Auth;
 
 class SubscriptionController extends Controller
 {
@@ -15,7 +16,7 @@ class SubscriptionController extends Controller
      */
     public function index()
     {
-        return response(Subscription::where('subscriber_id',Auth::id())->get());
+        return response(Subscription::where('subscriber_id',Auth::id())->with('currency')->get());
     }
 
     /**
@@ -27,7 +28,6 @@ class SubscriptionController extends Controller
     public function store(Request $request)
     {
       $validator = Validator::make($request->all(), [
-        'subscriber_id' => 'required',
         'currency_id' => 'required',
         'balance' => 'required',
       ]);
@@ -35,7 +35,7 @@ class SubscriptionController extends Controller
         return response($validator->failed());
 
       $sub = Subscription::create([
-        'subscriber_id' => $request->input('subscriber_id'),
+        'subscriber_id' => Auth::id(),
         'currency_id' => $request->input('currency_id'),
         'balance' => $request->input('balance'),
       ]);
@@ -46,11 +46,12 @@ class SubscriptionController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
+     *   The id of the currency.
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-      return response(Subscription::find($id));
+      return response(Subscription::where('subscriber_id','=',Auth::id())->where('currency_id','=',$id)->with('currency')->first());
     }
 
     /**
@@ -58,15 +59,12 @@ class SubscriptionController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
+     *   The id of the currency.
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $sub = Subscription::find($id);
-        if($request->has('subscriber_id'))
-          $sub->subscriber_id = $request->input('subscriber_id');
-        if($request->has('currency_id'))
-          $sub->currency_id = $request->input('currency_id');
+        $sub = Subscription::where('subscriber_id','=',Auth::id())->where('currency_id','=',$id)->first();
         if($request->has('balance'))
           $sub->balance = $request->input('balance');
 
@@ -81,7 +79,7 @@ class SubscriptionController extends Controller
      */
     public function destroy($id)
     {
-        $destroy = Subscription::destroy($id);
+        $destroy = Subscription::where('subscriber_id','=',Auth::id())->where('currency_id','=',$id)->delete();
         return response($destroy === 1); //True if successfully deleted.
     }
 }

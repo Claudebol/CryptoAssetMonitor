@@ -17,7 +17,7 @@ class SubscriberController extends Controller
      */
     public function index()
     {
-        return response(Subscriber::all());
+        return response(Subscriber::find(Auth::id()));
     }
 
     /**
@@ -44,26 +44,14 @@ class SubscriberController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-      return response(Subscriber::find($id));
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $subscriber = Subscriber::find($id);
+        $subscriber = Subscriber::find(Auth::id());
 
         if($request->has('email'))
           $subscriber->email = $request->input('email');
@@ -76,12 +64,11 @@ class SubscriberController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
-      $destroy = Subscriber::destroy($id);
+      $destroy = Subscriber::destroy(Auth::id());
       return response($destroy === 1); //True if successfully deleted.
     }
 }

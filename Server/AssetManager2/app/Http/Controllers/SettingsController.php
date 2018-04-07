@@ -9,6 +9,16 @@ use Validator;
 class SettingsController extends Controller
 {
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+      return response(Settings::where('subscriber_id','=',Auth::id())->first());
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -33,27 +43,14 @@ class SettingsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-      return response(Settings::find($id));
-    }
-
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-      $settings = Settings::find($id);
+      $settings = Settings::where('subscriber_id','=',Auth::id())->first();
       if($request->has('name'))
         $settings->name = $request->input('name');
       if($request->has('value_type'))
@@ -65,12 +62,11 @@ class SettingsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
-        $destroy = Settings::destroy($id);
+        $destroy = Settings::where('subscriber_id','=',Auth::id())->delete();
         return response($destroy === 1); //True if successfully deleted
     }
 }
