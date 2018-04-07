@@ -1,6 +1,6 @@
 .login-container {
-  width: 275px;
   text-align: center;
+  min-height: 130px;
   .form-field {
     position: relative;
     display: inline-block;
@@ -17,7 +17,7 @@
       padding-top: 0.1rem;
     }
     .eye {
-      left: 226px;
+      left: 250px;
       top: 4px;
       cursor: pointer;
     }
