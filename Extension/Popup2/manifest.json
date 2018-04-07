@@ -10,7 +10,7 @@
     "default_popup": "popup.html"
   },
   "permissions": [
-    "activeTab","http://assetmonitor.us-east-2.elasticbeanstalk.com/*","http://localhost:8080/*","https://streamer.cryptocompare.com/"
+    "activeTab","http://assetmonitor.us-east-2.elasticbeanstalk.com/*","http://localhost:8000/*","https://streamer.cryptocompare.com/"
   ]
 
 }
