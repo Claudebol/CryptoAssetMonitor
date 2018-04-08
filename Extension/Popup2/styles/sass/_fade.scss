@@ -1,0 +1,31 @@
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes fadeout {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@mixin fadein($duration) {
+  animation: fadein $duration ease-in 0s;
+}
+@mixin fadeout($duration) {
+  animation: fadeout $duration ease-out 0s;
+}
+
+$short: 1s;
+$med: 1.5s;
+$long: 2s;
+.fade {
+  &.in {
+    &.short {@include fadein($short);}
+    &.med {@include fadein($med);}
+    &.long {@include fadein($long);}
+  }
+  &.out {
+    &.short {@include fadeout($short);}
+    &.med {@include fadeout($med);}
+    &.long {@include fadeout($long);}
+  }
+}

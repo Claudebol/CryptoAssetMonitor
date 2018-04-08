@@ -13,5 +13,22 @@
 }
 
 .body {
-  min-width: 300px;
+  width: 300px;
+  height: 100px;
+  transition: height 1s ease-in-out 0s,
+    width 1s ease-in-out 0s,
+    background-color 1s ease-in-out 0s,
+    font-color 1s ease-in-out 0s;
+  &.login {
+    height: 180px;
+  }
+  &.loader {
+    height: 120px;
+  }
+  &.assets {
+    width: 550px;
+    height: 500px;
+  }
+
 }
+

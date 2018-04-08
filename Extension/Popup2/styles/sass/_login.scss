@@ -1,6 +1,5 @@
 .login-container {
   text-align: center;
-  min-height: 130px;
   .form-field {
     position: relative;
     display: inline-block;
@@ -39,8 +38,8 @@
       border: none;
       font-weight: 700;
       font-size: 14px;
-      -webkit-transition-duration: 0.3s; /* Safari */
-      transition-duration: 0.3s;
+      -webkit-transition-duration: 0.1s; /* Safari */
+      transition-duration: 0.1s;
       cursor: pointer;
       background: #eee;
       &:hover {
