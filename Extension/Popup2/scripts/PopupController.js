@@ -22,7 +22,8 @@ class PopupController {
     let controller = this;
     return function(r) {
       console.log(r);
-      controller.view.showAssets(r);
+      controller.model.loadAssets(r);
+      controller.view.showAssets(controller.model.assets);
     }
   };
 
@@ -38,7 +39,7 @@ class PopupController {
     return function(r){
       controller.view.showError(r);
     }
-  }
+  };
 
 
   setLoginClickListeners() {
@@ -66,7 +67,7 @@ class PopupController {
           controller.showError());
       });
     }
-  }
+  };
 
   request(type, url, data, success, restricted, error) {
     if(! /http/.test(url))
@@ -83,7 +84,7 @@ class PopupController {
           if(error) error(r);
       }
     });
-  }
+  };
 
 }
 
