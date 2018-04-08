@@ -59,12 +59,12 @@ class SubscriptionController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     *   The id of the currency.
+     *   The id of the subscription.
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $sub = Subscription::where('subscriber_id','=',Auth::id())->where('currency_id','=',$id)->first();
+        $sub = Subscription::where('subscriber_id','=',Auth::id())->where('id','=',$id)->first();
         if($request->has('balance'))
           $sub->balance = $request->input('balance');
 
