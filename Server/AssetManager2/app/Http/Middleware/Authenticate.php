@@ -16,7 +16,7 @@ class Authenticate
     public function handle(Request $request, Closure $next)
     {
 
-      if (Auth::check() || Auth::viaRemember()){
+      if (Auth::check()){
         return $next($request);
     }else
         return response('Forbidden', 403);
