@@ -1,6 +1,5 @@
 # CryptoAssetMonitor
-Personal project. 
-A Google Chrome extension that allows you to enter your balance for a specific cryptocurrency and keeps track of the price using CryptoCompare.com's data. 
+A Google Chrome extension to see the worth of your cryptocurrencies in real-time using the websocket provided by [Crypto Compare](http://www.cryptocompare.com) and short polling from [World Coin Index](http://www.worldcoinindex.com).
 
 To get started:
 1. Go to this link and install the extension: https://chrome.google.com/webstore/detail/crypto-asset-monitor/iebmplnmdafcdjkkdommoboiajljbjog
