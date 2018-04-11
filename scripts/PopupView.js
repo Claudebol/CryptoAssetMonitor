@@ -8,42 +8,57 @@ class PopupView{
     }['short'];
   }
 
+  fadeIn(selector, after, duration) {
+    let view = this;
+    if(!duration) duration = view.duration.type;
+    selector.removeClass('out').addClass(['fade','in',duration]);
+    if(after) setTimeout(after, view.duration.value);
+  };
+
+  fadeOut(selector, after, duration) {
+    let view = this;
+    if(!duration) duration = view.duration.type;
+    selector.removeClass('in').addClass(['fade','out',duration]);
+    if(after) setTimeout(after, view.duration.value);
+  };
+
+  adjustSizeFor(type='loader', after) {
+    let body = $('body');
+
+    body.removeClass(['login', 'assets', 'loader', 'error small', 'error large', 'success']);
+    body.addClass(type);
+    if (after) after();
+  };
+
   showLoader() {
     let view = this;
-    this.adjustSizeFor();
-    $('#content').load('views/loader.html', function(){
-      $('.header-container').removeClass('hide');
-      view.fadeIn($('.body'));
-    })
+
+    view.contentShift(
+      function(nxt){ view.adjustSizeFor('loader', nxt);}, //Before
+      function(){ //After
+        $('.header-container').removeClass('hide');
+        view.fadeIn($('.body'));
+      },
+      'loader' //View
+    );
+
   };
 
   showLogin(fn) {
     let view = this;
     let content = $('#content');
-    view.fadeOut(content);
-    view.adjustSizeFor('login');
-    setTimeout(function(){
-      content.load('views/login.html', function(){
+    view.contentShift(
+      function(nxt){ //Before
+        view.fadeOut(content);
+        view.adjustSizeFor('login', nxt);
+      },
+      function(){ //After
         view.fadeIn(content);
         if(fn) fn();
-      });
-    }, view.duration.value);
-  };
+      },
+      'login' //View
+    );
 
-  fadeIn(selector, duration) {
-    if(!duration) duration = this.duration.type;
-    selector.removeClass('out').addClass(['fade','in',duration]);
-  };
-
-  fadeOut(selector, duration) {
-    if(!duration) duration = this.duration.type;
-    selector.removeClass('in').addClass(['fade','out',duration]);
-  };
-
-  adjustSizeFor(type='loader') {
-    let body = $('body');
-    body.removeClass(['base','login', 'assets', 'loader']);
-    body.addClass(type);
   };
 
   showAssets(assets) {
@@ -51,14 +66,14 @@ class PopupView{
     let content = $('#content');
     let header = $('.header-container');
 
-    view.fadeOut(header);
-    view.fadeOut(content);
-    view.adjustSizeFor('assets');
-
-    setTimeout(function(){
-      content.load('views/assets.html', function(){
+    view.contentShift(
+      function(nxt){  //Before
+        view.fadeOut(header);
+        view.fadeOut(content);
+        view.adjustSizeFor('assets', nxt);
+      },
+      function(){  //After
         header.addClass('hide');
-        view.fadeIn(content);
         view.datatable = $('.assets-table').dataTable({
           bPaginate: false,
           scrollY: 400,
@@ -67,15 +82,83 @@ class PopupView{
           info: false,
           autoWidth: false
         });
-        for(let i in assets){
+        for(let i in assets)
           view.addAsset(assets[i]);
-        }
-      });
-    }, view.duration.value);
+        view.fadeIn(content);
+      },
+      'assets' //View
+    );
   };
 
-  showError(status) {
-    console.log(status);
+  showWelcome() {
+    let view = this;
+    let content = $('#content');
+    view.contentShift(
+      function(nxt){
+        view.fadeOut(content);
+        nxt(); }, //Before
+      function(){ view.fadeIn(content); }, //After
+      'welcome' //View
+    );
+  };
+
+  showSuccess() {
+    let view = this;
+    let content = $('#content');
+    view.contentShift(
+      function(nxt){
+        view.fadeOut(content);
+        view.adjustSizeFor('login success', nxt);
+      }, //Before
+      function(){ view.fadeIn(content); }, //After
+      'success' //View
+    );
+
+  };
+
+  showError(response) {
+    let view = this;
+    let content = $('#content');
+    if(response.status === 0){
+      view.contentShift(
+        function (nxt) {  //Before
+          view.fadeOut(content);
+          view.adjustSizeFor('loader', nxt);
+        },
+        function () { view.fadeIn(content); }, //After
+        'no-server' //View
+      );
+    } else if(response.status === 401) {
+      view.showLoginError(response.responseText);
+    }
+  };
+
+  showLoginError(msg) {
+    let view = this;
+    let err = $('.error-container');
+    let sz = /\<br\>/.test(msg) ? 'large' : 'small';
+    view.fadeOut(
+      err,
+      function(){
+        err.addClass('hide');
+        err.html(msg);
+        view.adjustSizeFor('login error ' + sz, function () {
+          err.removeClass('hide');
+          view.fadeIn(err);
+        });
+      }
+    );
+
+  }
+
+  contentShift(before, after, view, duration) {
+    if(!duration) duration = this.duration.value;
+    before(function(){
+      setTimeout(function(){
+        $('#content').load('views/' + view + '.html', after);
+      }, duration);
+    });
+
   };
 
   togglePassword() {
