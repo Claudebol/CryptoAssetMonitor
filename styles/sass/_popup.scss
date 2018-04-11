@@ -13,20 +13,32 @@
 }
 
 .body {
-  width: 300px;
-  height: 100px;
+  width: 1px;
+  height: 1px;
+  -webkit-transform-style: preserve-3d;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
   transition: height 1s ease-in-out 0s,
     width 1s ease-in-out 0s,
     background-color 1s ease-in-out 0s,
     font-color 1s ease-in-out 0s;
+  &.base {
+    transition: height 0.75s linear 0s,
+    width 0.75s linear 0s!important;
+    width: 300px;
+    height: 163px;
+  }
   &.login {
+    width: 300px;
     height: 180px;
   }
   &.loader {
-    height: 120px;
+    width: 300px;
+    height: 125px;
   }
   &.assets {
-    width: 550px;
+    width: 400px;
     height: 500px;
   }
 

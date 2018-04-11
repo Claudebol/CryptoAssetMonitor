@@ -12,6 +12,7 @@ class PopupView{
     let view = this;
     this.adjustSizeFor();
     $('#content').load('views/loader.html', function(){
+      $('.header-container').removeClass('hide');
       view.fadeIn($('.body'));
     })
   };
@@ -41,7 +42,7 @@ class PopupView{
 
   adjustSizeFor(type='loader') {
     let body = $('body');
-    body.removeClass(['login', 'assets', 'loader']);
+    body.removeClass(['base','login', 'assets', 'loader']);
     body.addClass(type);
   };
 
@@ -60,11 +61,11 @@ class PopupView{
         view.fadeIn(content);
         view.datatable = $('.assets-table').dataTable({
           bPaginate: false,
-          scrollY: 350,
+          scrollY: 400,
           scrollCollapse: true,
           searching: false,
           info: false,
-          autoWidth: true
+          autoWidth: false
         });
         for(let i in assets){
           view.addAsset(assets[i]);

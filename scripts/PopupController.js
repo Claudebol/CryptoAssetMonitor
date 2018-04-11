@@ -2,20 +2,24 @@ class PopupController {
   constructor() {
     this.model = new PopupModel();
     this.view = new PopupView();
-    this.bh = 'http://localhost:8000/popup/';
+    //this.bh = 'http://localhost:8000/popup/';
+     this.bh = 'http://stsherman.us-east-2.elasticbeanstalk.com/popup/';
   }
 
   connect() {
     let controller = this;
-    controller.view.showLoader();
-
-    this.request(
-      'GET',
-      'subscriber',
-      undefined,
-      controller.showAssets(),
-      controller.showLogin(),
-      controller.showError());
+    controller.view.adjustSizeFor('base');
+    setTimeout(function() {
+      controller.view.showLoader();
+      controller.request(
+          'GET',
+          'subscription',
+          undefined,
+          controller.showAssets(),
+          controller.showLogin(),
+          controller.showError());
+      },
+      750);
   };
 
   showAssets() {

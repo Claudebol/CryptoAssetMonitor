@@ -12,7 +12,7 @@
   "permissions": [
     "activeTab",
     "cookies",
-    "http://assetmonitor.us-east-2.elasticbeanstalk.com/*",
+    "http://stsherman.us-east-2.elasticbeanstalk.com/popup/*",
     "http://localhost:8000/*",
     "https://streamer.cryptocompare.com/"
   ]
