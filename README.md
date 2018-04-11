@@ -1,17 +1,5 @@
 # CryptoAssetMonitor
-Personal project. 
-A Google Chrome extension that allows you to enter your balance for a specific cryptocurrency and keeps track of the price using CryptoCompare.com's data. 
-I have a server built that continuously pulls all the prices from CryptoCompare.com.
-Also, each client has a connection to the Websocket provided by CryptoCompare.com.
-
-Connects to a server also designed by me (written in Java using SpringMVC) that is hosted by Amazon AWS.
-Server code will eventually be included but is not currently.
-
-Uses Cookies to keep you signed into your account. The server uses sessions to keep track of each client. 
-Uses a MySQL database.
-
-Email and password are encrypted. Email doesn't really serve a purpose other than a username at the moment, but will be used for password recovery.
-
+A Google Chrome extension to see the worth of your cryptocurrencies in real-time using the websocket provided by [Crypto Compare](http://www.cryptocompare.com) and short polling from [World Coin Index](http://www.worldcoinindex.com).
 
 To get started:
 1. Go to this link and install the extension: https://chrome.google.com/webstore/detail/crypto-asset-monitor/iebmplnmdafcdjkkdommoboiajljbjog
