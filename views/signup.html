@@ -1,4 +1,12 @@
-<form method="post" action="login" enctype="application/x-www-form-urlencoded" class="login">
+<form method="post" action="signup" enctype="application/x-www-form-urlencoded" class="signup">
+  <div class="form-field">
+    <label for="first">First Name:</label>
+    <input type="text" name="first" id="first" placeholder="First name" required>
+  </div>
+  <div class="form-field">
+    <label for="last">Last Name:</label>
+    <input type="text" name="last" id="last" placeholder="Last name" required>
+  </div>
   <div class="form-field">
     <label for="email">Email:</label>
     <input type="email" name="email" id="email" placeholder="Email" required>
@@ -9,7 +17,8 @@
     <div class="eye" title="Show password" data-title="Hide password"><div class="hide"></div></div>
   </div>
   <div class="form-field">
-    <a href="#">Forgot your password?</a>
+    <label for="confirm">Confirm:</label>
+    <input type="password" name="confirm" id="confirm" placeholder="Confirm password" required>
   </div>
   <div class="form-buttons">
     <input type="button" id="submit" value="Submit">
