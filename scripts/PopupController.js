@@ -8,16 +8,18 @@ class PopupController {
 
   connect() {
     let controller = this;
-    controller.view.showLoader(); //Fade the loader in.
-    setTimeout(function(){ //Wait for 1500ms to just show the loader.
-      controller.request( //Request to the server.
-        'GET',
-        'subscription',
-        undefined,
-        controller.showWelcome(controller.showAssets()), //If we get a 200, show the assets.
-        controller.showLogin(), //If we get a 403, show the login
-        controller.showError()); //If we get something else, show 'No server' screen.
-    }, 1500);
+    controller.view.showLoader(
+      function() {
+        controller.request( //Request to the server.
+          'GET',
+          'subscription',
+          undefined,
+          controller.showWelcome(controller.showAssets()), //If we get a 200, show the assets.
+          controller.showLogin(), //If we get a 403, show the login
+          controller.showError()); //If we get something else, show 'No server' screen.
+      }
+    ); //Fade the loader in.
+
   };
 
   showWelcome(f) {
@@ -26,7 +28,8 @@ class PopupController {
       controller.view.showWelcome();
       setTimeout(function(){
           f(r);
-        },2000
+        },
+        controller.view.growDuration * 2
       );
     }
   }
@@ -37,7 +40,8 @@ class PopupController {
       controller.view.showSuccess();
       setTimeout(function(){
           f(r);
-        },2000
+        },
+        controller.view.growDuration
       );
     }
   };
@@ -57,7 +61,7 @@ class PopupController {
       if(r.status === 401){
         controller.view.showError(r)
       }else
-        controller.view.showLogin(controller.setLoginClickListeners());
+        controller.view.showLogin(controller.clickListeners());
     }
   };
 
@@ -69,36 +73,71 @@ class PopupController {
     }
   };
 
-
-  setLoginClickListeners() {
+  clickListeners(type) {
     let controller = this;
-    return function() {
-      $('.eye').click(controller.view.togglePassword);
-      $('#login-button').click(function () {
-        controller.sendForm('login');
-      });
-      $('#signup-button').click(function () {
-        controller.sendForm('subscriber');
-      });
-    }
+    if(!type)
+      return function() {
+        controller.clickListeners('login')();
+
+        $('#l_tab').click(function(){
+          $('.selected').removeClass('selected');
+          $('#l_tab').addClass('selected');
+          controller.view.showLoginForm(
+            controller.clickListeners('login')
+          );
+        });
+        $('#r_tab').click(function(){
+          $('.selected').removeClass('selected');
+          $('#r_tab').addClass('selected');
+          controller.view.showSignupForm(
+            controller.clickListeners('signup')
+          );
+        });
+      };
+    if(type === 'login')
+      return function(){
+        $('.eye').click(controller.view.togglePassword);
+        $('#submit').click(function () {
+          controller.sendForm('login');
+        });
+      };
+    if(type === 'signup')
+      return function(){
+        $('.eye').click(controller.view.togglePassword);
+        $('#submit').click(function () {
+          controller.sendForm('signup');
+        });
+      };
   };
 
-  sendForm(url) {
-    let controller = this;
+  checkLogin(){
     let email = $('#email');
     let pass = $('#password');
-    let data = $('.login-container form').serialize();
     let valid_e = /[\w]+@[\w]+\.[\w]/.test(email.val());
     let valid_p = pass.val().length > 0;
-
-
+    let out = undefined;
     if(!valid_e || !valid_p){
-      let out = '';
+      out = '';
       if(!valid_e)
         out += 'Must enter a valid email<br>';
       if(!valid_p)
         out += 'Must enter a password';
-      controller.view.showLoginError(out);
+    }
+    return out;
+  };
+
+  checkSignup(){
+
+  }
+
+
+  sendForm(url) {
+    let controller = this;
+    let data = $('.login-container form').serialize();
+    let login_errors = controller.checkLogin();
+
+    if(login_errors){
+      controller.view.showLoginError(login_errors);
     }
     else{
       controller.request(

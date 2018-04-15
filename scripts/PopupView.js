@@ -1,47 +1,55 @@
 class PopupView{
   constructor(){
     this.datatable = undefined;
-    this.duration = {
-      short:{type: 'short', value: 700},
-      med: {type: 'med', value: 1100},
-      long: {type: 'long', value: 1600}
-    }['short'];
+    this.fadeDuration = 300;
+    this.growDuration = 450; //Total. 0.5 width, 0.5 height.
   }
 
-  fadeIn(selector, after, duration) {
+  fadeIn(selector, after) {
     let view = this;
-    if(!duration) duration = view.duration.type;
-    selector.removeClass('out').addClass(['fade','in',duration]);
-    if(after) setTimeout(after, view.duration.value);
+    selector.removeClass('invisible');
+    if(after)
+      setTimeout(
+        after,
+        view.fadeDuration
+      );
   };
 
-  fadeOut(selector, after, duration) {
+  fadeOut(selector, after) {
     let view = this;
-    if(!duration) duration = view.duration.type;
-    selector.removeClass('in').addClass(['fade','out',duration]);
-    if(after) setTimeout(after, view.duration.value);
+    selector.addClass('invisible');
+    if(after)
+      setTimeout(
+        after,
+        view.fadeDuration
+      );
   };
 
   adjustSizeFor(type='loader', after) {
     let body = $('body');
-
-    body.removeClass(['login', 'assets', 'loader', 'error small', 'error large', 'success']);
-    body.addClass(type);
-    if (after) after();
+    let duration = this.growDuration;
+    if(body.hasClass(type)){
+      duration = 0;
+    }else {
+      body.removeClass(['login', 'assets', 'loader', 'error small', 'error large', 'success', 'signup']);
+      body.addClass(type);
+    }
+    if (after) setTimeout(after, duration);
   };
 
-  showLoader() {
+  showLoader(after) {
     let view = this;
-
     view.contentShift(
-      function(nxt){ view.adjustSizeFor('loader', nxt);}, //Before
+      function(nxt){
+        view.adjustSizeFor('loader', nxt);
+        }, //Before
       function(){ //After
-        $('.header-container').removeClass('hide');
-        view.fadeIn($('.body'));
+        view.fadeIn($('.header-container'));
+        view.fadeIn($('#content'));
+        if(after) after();
       },
       'loader' //View
     );
-
   };
 
   showLogin(fn) {
@@ -53,12 +61,52 @@ class PopupView{
         view.adjustSizeFor('login', nxt);
       },
       function(){ //After
+        $('.access-form').load('views/login.html',
+          function(){
+            view.fadeIn(content);
+            if(fn) fn();
+          });
+      },
+      'access' //View
+    );
+  };
+
+  showLoginForm(fn) {
+    let view = this;
+    let content = $('.access-form');
+    view.contentShift(
+      function(nxt){ //Before
+        view.fadeOut(
+          content,
+          function(){
+            content.children().addClass('hide');
+          });
+        view.adjustSizeFor('login', nxt);
+      },
+      function(){ //After
         view.fadeIn(content);
         if(fn) fn();
       },
-      'login' //View
+      'login', //View,
+      content
     );
+  };
 
+  showSignupForm(fn) {
+    let view = this;
+    let content = $('.access-form');
+    view.contentShift(
+      function(nxt){ //Before
+        view.fadeOut(content);
+        view.adjustSizeFor('signup', nxt);
+      },
+      function(){ //After
+        view.fadeIn(content);
+        if(fn) fn();
+      },
+      'signup', //View
+      content
+    );
   };
 
   showAssets(assets) {
@@ -136,29 +184,46 @@ class PopupView{
   showLoginError(msg) {
     let view = this;
     let err = $('.error-container');
-    let sz = /\<br\>/.test(msg) ? 'large' : 'small';
+    let sz = /\<br\>\w/.test(msg) ? 'large' : 'small';
     view.fadeOut(
-      err,
-      function(){
-        err.addClass('hide');
-        err.html(msg);
-        view.adjustSizeFor('login error ' + sz, function () {
-          err.removeClass('hide');
-          view.fadeIn(err);
+      err, //Fade out error container
+      function(){ //Once faded out...
+        let type = $('.body').hasClass('signup') ? 'signup' : 'login';
+        view.adjustSizeFor(type + ' error ' + sz, function () { //Adjust to proper size for error
+          err.html(msg); //Set error message
+          view.fadeIn(err); //Fade error container in
+          setTimeout( //Show error for 2 seconds
+            function(){ //After the 2 seconds is done...
+              view.fadeOut(
+                err, //Fade out the error container
+                function () { //After faded out...
+                  err.html(''); //Clear error message
+                  $('.body').removeClass('error ' + sz); //Revert to normal size.
+                }
+              );
+            },
+            2000
+          );
         });
       }
     );
 
   }
 
-  contentShift(before, after, view, duration) {
-    if(!duration) duration = this.duration.value;
-    before(function(){
-      setTimeout(function(){
-        $('#content').load('views/' + view + '.html', after);
-      }, duration);
+  contentShift(before, after, view, content) {
+    let duration = this.fadeDuration;
+    if(!content) content = $('#content');
+    before(
+      function(){
+        setTimeout(
+          function(){
+            content.load(
+              'views/' + view + '.html',
+              after
+            );
+          },
+          duration);
     });
-
   };
 
   togglePassword() {
