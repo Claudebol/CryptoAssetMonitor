@@ -3,3 +3,9 @@
   50%  { opacity: 0.25; }
   100% { opacity: 1.0; }
 }
+
+.loader-container {
+  h4 {
+    animation: flash 2s infinite 0s;
+  }
+}

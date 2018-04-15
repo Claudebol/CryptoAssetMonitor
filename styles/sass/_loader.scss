@@ -1,40 +1,76 @@
-.lds-ripple {
+.lds-grid {
   display: inline-block;
   position: relative;
   width: 64px;
   height: 64px;
-  margin: 0.5rem;
-  div {
+  margin: 10px 0 15px;
+
+  & div {
     position: absolute;
-    border: 4px solid #fff;
-    opacity: 1;
+    width: 13px;
+    height: 13px;
     border-radius: 50%;
-    animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
-    :nth-child(2) {
-      animation-delay: -0.5s;
+    background: #cef;
+    animation: lds-grid 1.2s linear infinite;
+    &:nth-child(1) {
+      top: 6px;
+      left: 6px;
+      animation-delay: 0s;
+    }
+    &:nth-child(2) {
+      top: 6px;
+      left: 26px;
+      animation-delay: -0.4s;
+    }
+    &:nth-child(3) {
+      top: 6px;
+      left: 45px;
+      animation-delay: -0.8s;
+    }
+    &:nth-child(4) {
+      top: 26px;
+      left: 6px;
+      animation-delay: -0.4s;
+    }
+    &:nth-child(5) {
+      top: 26px;
+      left: 26px;
+      animation-delay: -0.8s;
+    }
+    &:nth-child(6) {
+      top: 26px;
+      left: 45px;
+      animation-delay: -1.2s;
+    }
+    &:nth-child(7) {
+      top: 45px;
+      left: 6px;
+      animation-delay: -0.8s;
+    }
+    &:nth-child(8) {
+      top: 45px;
+      left: 26px;
+      animation-delay: -1.2s;
+    }
+    &:nth-child(9) {
+      top: 45px;
+      left: 45px;
+      animation-delay: -1.6s;
     }
   }
 }
-@keyframes lds-ripple {
-  0% {
-    top: 28px;
-    left: 28px;
-    width: 0;
-    height: 0;
+@keyframes lds-grid {
+  0%, 100% {
     opacity: 1;
   }
-  100% {
-    top: -1px;
-    left: -1px;
-    width: 58px;
-    height: 58px;
-    opacity: 0;
+  50% {
+    opacity: 0.5;
   }
 }
-
 .loader-container {
-  text-align: center;
-   h4 {
-     animation: flash 4s infinite 1s;
-   }
-}
+   text-align: center;
+  h4{
+    margin: 0;
+  }
+
+ }

@@ -4,46 +4,66 @@
   display: none;
 }
 
+$loginHeight: 240px;
+$loginWidth: 300px;
+$signupHeight: 320px;
 .body {
   width: 300px;
   height: 1px;
-  -webkit-transform-style: preserve-3d;
-  -webkit-backface-visibility: hidden;
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
-  transition: height 1s ease-in-out 0s,
-    width 0.5s ease-in-out 1s,
+  margin: 0;
+  padding: 0;
+  &,
+  *{  box-sizing: border-box;}
+
+  transition: height 0.33s ease-in-out 0.33s,
+    width 0.33s ease-in-out 0s,
     background-color 1s ease-in-out 0s,
     font-color 1s ease-in-out 0s;
-  &.dark-mode {
+  &.dark {
     background: #333;
     color: #ddd;
   }
-  &.light-mode {
+  &.light {
     background: #ddd;
     color: #333;
   }
   &.login {
-    height: 180px;
+    width: $loginWidth;
+    height: $loginHeight;
     &.error {
       &.small{
-        height: 200px;
+        height: $loginHeight + 30px;
       }
       &.large{
-        height: 220px;
+        height: $loginHeight + 50px;
       }
     }
     &.success {
       height: 210px;
     }
   }
+  &.signup {
+    width: $loginWidth;
+    height: $signupHeight;
+    &.error {
+      &.small{
+        height: $signupHeight + 30px;
+      }
+      &.large{
+        height: $signupHeight + 50px;
+      }
+    }
+
+  }
   &.loader {
     width: 300px;
-    height: 165px;
+    height: 170px;
   }
   &.assets {
     width: 400px;
     height: 500px;
+    max-width: 400px;
+    max-height: 500px;
   }
   .notifier{
     text-align: center;
@@ -55,6 +75,15 @@
   .welcome-container {
     margin-top: 3rem;
   }
+  .no-server-container{
+    h4{
+      margin:0;
+    }
+    img {
+      margin: 10px 0 15px;
+    }
 
+
+  }
 }
 

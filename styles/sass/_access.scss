@@ -1,0 +1,80 @@
+.access-container {
+  text-align: center;
+  .nav-tabs{
+    background: #61616178;
+    height: 30px;
+    margin-bottom: 20px;
+    .tab {
+      position: relative;
+      width: 50%;
+      height: 100%;
+      float: left;
+      vertical-align: middle;
+      line-height: 1.9;
+      font-size: 15px;
+      cursor: pointer;
+      box-shadow: inset 0 0 5px 0 #0000007a;
+      transition: background 0.33s ease 0s;
+      &:hover.selected,
+      &.selected {
+        background: #9196f3;
+        box-shadow: inset 0px -1px 3px 0px #0000007a;
+      }
+    }
+  }
+  .error-container {
+    padding-top: 10px;
+    font-size: 14px;
+    color: red;
+  }
+
+  .access-form {
+    .form-field {
+      position: relative;
+      display: inline-block;
+      width: 90%;
+      margin-bottom:0.6em;
+      input{
+        float: right;
+        border: 0.2rem solid transparent;
+        border-radius: 4px;
+      }
+      label {
+        float: left;
+        font-size: 15px;
+        padding-top: 0.1rem;
+      }
+      .eye {
+        left: 250px;
+        top: 5px;
+        cursor: pointer;
+      }
+      a {
+        float: right;
+        margin-top: -0.4rem;
+        color: #f00;
+      }
+    }
+    .form-buttons {
+      padding-top: 0.5rem;
+      * {
+        width: 5.5rem;
+        height: 1.75rem;
+        max-height: 2rem;
+        margin: 0.1em;
+        border-radius: 5px;
+        outline: none;
+        border: none;
+        font-weight: 700;
+        font-size: 14px;
+        transition-duration: 0.1s;
+        cursor: pointer;
+        background: #eee;
+        &:hover {
+          background: #9196F3;
+          color: #eee;
+        }
+      }
+    }
+  }
+}
