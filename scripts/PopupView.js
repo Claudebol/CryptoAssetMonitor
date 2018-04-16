@@ -25,19 +25,19 @@ class PopupView{
       );
   };
 
-  adjustSizeFor(type='loader', after) {
+  adjustSizeFor(type='loader', after, duration) {
     let body = $('body');
-    let duration = this.growDuration;
     if(body.hasClass(type)){
       duration = 0;
     }else {
+      if(!duration) duration = this.growDuration;
       body.removeClass(['login', 'assets', 'loader', 'error small', 'error large', 'success', 'signup']);
       body.addClass(type);
     }
     if (after) setTimeout(after, duration);
   };
 
-  showLoader(after) {
+  showConnectSpinner(after) {
     let view = this;
     view.contentShift(
       function(nxt){
@@ -48,8 +48,23 @@ class PopupView{
         view.fadeIn($('#content'));
         if(after) after();
       },
-      'loader' //View
+      'spinners/connect' //View
     );
+  };
+
+  addAuthSpinner(){
+    let view = this;
+    let content = $('#content');
+    let spn = $('<div></div>');
+    spn.load('views/spinners/auth.html', function(){
+      content.prepend(spn.html());
+      setTimeout(
+        function(){
+          view.fadeIn($('.auth-spinner'));
+        },
+        10
+      )
+    });
   };
 
   showLogin(fn) {
@@ -122,14 +137,7 @@ class PopupView{
       },
       function(){  //After
         header.addClass('hide');
-        view.datatable = $('.assets-table').dataTable({
-          bPaginate: false,
-          scrollY: 400,
-          scrollCollapse: true,
-          searching: false,
-          info: false,
-          autoWidth: false
-        });
+
         for(let i in assets)
           view.addAsset(assets[i]);
         view.fadeIn(content);
@@ -177,7 +185,13 @@ class PopupView{
         'no-server' //View
       );
     } else if(response.status === 401) {
+      let spinner = $('.auth-spinner');
       view.showLoginError(response.responseText);
+      view.fadeOut(
+        spinner,
+        function(){
+          spinner.remove();
+        });
     }
   };
 
@@ -192,8 +206,8 @@ class PopupView{
         view.adjustSizeFor(type + ' error ' + sz, function () { //Adjust to proper size for error
           err.html(msg); //Set error message
           view.fadeIn(err); //Fade error container in
-          setTimeout( //Show error for 2 seconds
-            function(){ //After the 2 seconds is done...
+          setTimeout( //Show error for 5 seconds
+            function(){ //After the 5 seconds is done...
               view.fadeOut(
                 err, //Fade out the error container
                 function () { //After faded out...
@@ -202,7 +216,7 @@ class PopupView{
                 }
               );
             },
-            2000
+            5000
           );
         });
       }
@@ -250,6 +264,13 @@ class PopupView{
     let _value = "<div class='value_"+ data.sub_id +"'><input type='number' value='"+ data.value +"'></div>";
     let _percent = "<div class='percent_"+ data.sub_id +"'><input type='number' value='"+ data.percent +"'></div>";
 
-    this.datatable.fnAddData([_icon, _balance, _value, _percent]);
+    let _row = [_icon, _balance, _value, _percent]
+
+    let out = "<tr>";
+    for(let i in _row)
+      out += "<td>" + _row[i] + "</td>"
+    $('.assets-table').append(out + "</tr>")
+
+    // this.datatable.fnAddData([_icon, _balance, _value, _percent]);
   };
 }

@@ -8,7 +8,7 @@ class PopupController {
 
   connect() {
     let controller = this;
-    controller.view.showLoader(
+    controller.view.showConnectSpinner(
       function() {
         controller.request( //Request to the server.
           'GET',
@@ -73,12 +73,14 @@ class PopupController {
     }
   };
 
+
   clickListeners(type) {
     let controller = this;
-    if(!type)
-      return function() {
+    if(!type) type = 'access';
+    let listeners = {
+      //Click listeners for login/register tabs and login since that the initial view
+      access: function(){
         controller.clickListeners('login')();
-
         $('#l_tab').click(function(){
           $('.selected').removeClass('selected');
           $('#l_tab').addClass('selected');
@@ -93,21 +95,30 @@ class PopupController {
             controller.clickListeners('signup')
           );
         });
-      };
-    if(type === 'login')
-      return function(){
+      },
+      //Click listener for the login view
+      login: function(){
         $('.eye').click(controller.view.togglePassword);
+        $('.form-field input').focus(function(){
+          this.classList.remove('invalid');
+        });
         $('#submit').click(function () {
           controller.sendForm('login');
         });
-      };
-    if(type === 'signup')
-      return function(){
+      },
+      //Click listener for the signup view
+      signup: function(){
         $('.eye').click(controller.view.togglePassword);
+        $('.form-field input').focus(function(){
+          this.classList.remove('invalid');
+        });
         $('#submit').click(function () {
           controller.sendForm('signup');
         });
-      };
+      }
+    };
+    //Return the proper function.
+    return listeners[type];
   };
 
   checkLogin(){
@@ -115,14 +126,22 @@ class PopupController {
     let pass = $('#password');
     let valid_e = /[\w]+@[\w]+\.[\w]/.test(email.val());
     let valid_p = pass.val().length > 0;
-    let out = undefined;
-    if(!valid_e || !valid_p){
-      out = '';
-      if(!valid_e)
-        out += 'Must enter a valid email<br>';
-      if(!valid_p)
-        out += 'Must enter a password';
+    let out = '';
+
+    if(!valid_e){
+      out += 'Email must contain a "@" and a "."';
+      email.addClass('invalid');
+    }else{
+      email.removeClass('invalid');
     }
+    if(!valid_p){
+      if(out) out += '<br>';
+      out += 'Must enter a password';
+      pass.addClass('invalid');
+    }else{
+      pass.removeClass('invalid');
+    }
+
     return out;
   };
 
@@ -133,13 +152,14 @@ class PopupController {
 
   sendForm(url) {
     let controller = this;
-    let data = $('.login-container form').serialize();
+    let data = $('.access-container form').serialize();
     let login_errors = controller.checkLogin();
 
     if(login_errors){
       controller.view.showLoginError(login_errors);
     }
     else{
+      controller.view.addAuthSpinner();
       controller.request(
         'POST',
         url,
