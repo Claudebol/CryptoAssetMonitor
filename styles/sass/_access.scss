@@ -35,6 +35,7 @@
       width: 90%;
       margin-bottom:0.6em;
       input{
+        transition: background 1s ease 0s;
         float: right;
         border: 0.2rem solid transparent;
         border-radius: 4px;
@@ -53,6 +54,9 @@
         float: right;
         margin-top: -0.4rem;
         color: #f00;
+      }
+      .invalid {
+        background: #ffa4a4;
       }
     }
     .form-buttons {
