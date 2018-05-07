@@ -1,5 +1,9 @@
-
-
+* {
+  overflow: hidden;
+}
+::-webkit-scrollbar {
+  display: none;
+}
 .hide {
   display: none;
 }
@@ -22,6 +26,11 @@ $signupHeight: 320px;
   &.dark {
     background: #333;
     color: #ddd;
+
+    .assets-container .assets-table input[type=number]{
+      background: transparent;
+      color: #ddd;
+    }
   }
   &.light {
     background: #ddd;
@@ -73,7 +82,7 @@ $signupHeight: 320px;
     margin-top: 1.75rem;
   }
   .welcome-container {
-    margin-top: 35px;
+    margin-top: 15px;
   }
   .no-server-container{
     h4{
@@ -82,8 +91,9 @@ $signupHeight: 320px;
     img {
       margin: 10px 0 15px;
     }
-
-
+  }
+  #content{
+    height: 100%;
   }
 }
 

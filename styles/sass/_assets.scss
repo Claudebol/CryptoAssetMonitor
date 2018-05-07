@@ -1,8 +1,124 @@
 .assets-container {
-  .assets-table {
-    .asset-icon{ width: 10%; }
-    .asset-balance{ width: 40%; }
-    .asset-value{ width: 30%; }
-    .asset-change{ width: 20%;}
+  height: 100%;
+  .assets-header{
+    width: 100%;
+    height: 30px;
+    .assets-menu {
+      float: left;
+    }
+    .assets-search {
+      position: relative;
+      float: right;
+      padding-right: 20px;
+      padding-top: 10px;
+      input {
+        outline: none;
+        padding-right: 5px;
+        padding-left: 5px;
+        transition: all 0.5s ease 0.25s;
+        width: 100px;
+        height: 20px;
+        text-align: right;
+        border-radius: 5px;
+        border: none;
+        &:focus,
+        &:hover{
+          width: 200px;
+        }
+        &:focus{
+          &::-webkit-input-placeholder {
+            color:transparent;
+          }
+        }
+      }
+      .search-results{
+        display: none;
+        background: #fff;
+        width: 200px;
+        max-height: 200px;
+        position: fixed;
+        right: 20px;
+        border-radius: 5px;
+        overflow: scroll;
+        box-shadow: inset 0 -1px 20px 4px #ddd;
+        border: 1px solid #ddd;
+
+        .suggestion{
+          color: #000;
+          padding: 7px 5px;
+          border-bottom: 1px solid #ddd;
+          .suggestion-title{
+            float: left;
+          }
+          .suggestion-add{
+            float: right;
+          }
+          .suggestion-form{
+            float: left;
+            display: none;
+            .suggestion-balance{
+
+            }
+            .suggestion-submit{
+              text-align: center;
+            }
+          }
+        }
+      }
+    }
+  }
+  .assets-table-container {
+    height:100%;
+    width: 100%;
+    .assets-table {
+      width: 100%;
+      height: 100%;
+      tbody,
+      thead,
+      tfoot{
+        display: block;
+      }
+      thead tr th:nth-child(1),
+      tfoot tr td:nth-child(1){
+        width: 22px;
+      }
+      thead tr th:not(:nth-child(1)),
+      tfoot tr td:not(:nth-child(1)){
+        width: 119px;
+      }
+      thead tr{
+        height: 30px;
+      }
+      tfoot tr{
+        height: 40px;
+        td{
+          text-align: center;
+        }
+      }
+      tbody {
+        border-top: 1px solid #555;
+        border-bottom: 1px solid #555;
+        max-height: 390px;
+        overflow-y: scroll !important;
+      }
+      .asset_icon {
+        text-align: center;
+        vertical-align: middle;
+        line-height: 1px;
+      }
+      input[type=number] {
+        width: 100%;
+        border-radius: 5px;
+        border: none;
+        height: 20px;
+        padding-left: 10px;
+        padding-right: 10px;
+        &::-webkit-inner-spin-button,
+        &::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+      }
+    }
   }
 }
