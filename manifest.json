@@ -9,12 +9,14 @@
     "default_icon": "images/icon.png",
     "default_popup": "popup.html"
   },
+  "content_security_policy": "script-src 'self' https://sockjs-us2.pusher.com https://stats.pusher.com; object-src 'self'",
   "permissions": [
     "activeTab",
     "cookies",
-    "http://stsherman.us-east-2.elasticbeanstalk.com/popup/*",
+    "http://ec2-18-188-200-189.us-east-2.compute.amazonaws.com/popup/*",
     "http://localhost:8000/*",
-    "https://streamer.cryptocompare.com/"
+    "https://streamer.cryptocompare.com/",
+    "https://stats.pusher.com/*"
   ]
 
 }
