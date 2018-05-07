@@ -1,12 +1,34 @@
 <div class="assets-container">
-  <table class="assets-table">
-    <thead>
-      <tr>
-        <th class="asset-icon">Icon</th>
-        <th class="asset-balance">Balance</th>
-        <th class="asset-value">Value</th>
-        <th class="asset-change">%Change</th>
-      </tr>
-    </thead>
-  </table>
+  <div class="assets-header">
+    <div class="assets-menu">MENU</div>
+    <div class="assets-search">
+      <input type="text" id="asset-search" placeholder="Find a coin">
+      <div class="search-results"></div>
+    </div>
+  </div>
+  <div class="assets-table-container">
+    <table class="assets-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Balance</th>
+          <th>CryptoCompare</th>
+          <th>WorldCoinIndex</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot>
+        <tr>
+          <td></td>
+          <td>Totals</td>
+          <td>
+            <input id="total_value_usd_cc" type="number" value="0" readonly>
+          </td>
+          <td>
+            <input id="total_value_usd_wci" type="number" value="0" readonly>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
 </div>
